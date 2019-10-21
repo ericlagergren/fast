@@ -84,14 +84,16 @@ func main() {
 		weights = append(weights, float64(r.N))
 
 		tprintf(w, "\t%d\t%.3f\n", r.N, mbps)
-		if i == len(c.Targets)-1 {
+		// Align the "RESULT: ..." section. This only works because all the URLs
+		// are the same size.
+		if i != len(c.Targets)-1 {
 			w.Flush()
 			initWriter(w)
 		}
 	}
 
 	mean, std := stat.MeanStdDev(x, weights)
-	tprintf(w, "\nRESULT:\t\t%.3f ±%.3f\n", mean, std)
+	tprintf(w, "\t\t%.3f ±%.3f\n", mean, std)
 	w.Flush()
 }
 
